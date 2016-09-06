@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+  \draw[thick,red] (1.1,1.1) circle [radius=0.22];
+  \draw[thick,red] (0,1.1) ellipse [y radius=0.22, x radius=.15];
+  \draw[thick,red] (2.2,1.1) ellipse [y radius=0.22, x radius=.15];
+  \draw[thick,green] (0.5,1.1) ellipse [y radius=0.22, x radius=0.4];
+  \draw[thick,green] (1.7,1.1) ellipse [y radius=0.22, x radius=0.4];
+  \draw[thick,green] (1.1,0.5) ellipse [x radius=0.22, y radius=0.4];
+
+    \draw[thick] (0,0)
+    -- (1,0) node {$\bullet$}
+    -- (1,1) node {$\bullet$}
+    -- (0,1) node {$\bullet$}
+    -- (0,0);
+    \draw (1, 0.33) node {$\bullet$};
+    \draw (1, 0.67) node {$\bullet$};
+    \draw (0.5, 1) node {$\bullet$};
+
+    \draw[thick] (2.2,0)
+    -- (1.2,0) node {$\bullet$}
+    -- (1.2,1) node {$\bullet$}
+    -- (2.2,1) node {$\bullet$}
+    -- (2.2,0);
+    \draw (1.2, 0.33) node {$\bullet$};
+    \draw (1.2, 0.67) node {$\bullet$};
+    \draw (1.7, 1) node {$\bullet$};
+
+    \draw[thick] (0,1.5)
+    -- (0,1.2) node {$\bullet$}
+    -- (1,1.2) node {$\bullet$}
+    -- (1,1.5);
+    \draw (0.5, 1.2) node {$\bullet$};
+
+    \draw[thick] (1.2,1.5)
+    -- (1.2,1.2) node {$\bullet$}
+    -- (2.2,1.2) node {$\bullet$}
+    -- (2.2,1.5);
+    \draw (1.7, 1.2) node {$\bullet$};
+\end{tikzpicture}

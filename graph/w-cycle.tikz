@@ -1,0 +1,20 @@
+\begin{tikzpicture}[xscale=0.5]
+  \draw[thick] (0,4) node {$\bullet$}
+  -- (0.5,3) node {$\bullet$};
+  \draw[thick,dotted] (0.5,3) -- (1,2) node {$\bullet$};
+  \draw[thick] (1,2) -- (1.5,1) node {$\bullet$}
+  -- (2,0) node[red] {$\bullet$}
+  -- (2.5,1) node {$\bullet$}
+  -- (3,0) node[red] {$\bullet$}
+  -- (3.5,1) node {$\bullet$}
+  -- (4,2) node {$\bullet$}
+  -- (4.5,1) node {$\bullet$}
+  -- (5,0) node[red] {$\bullet$}
+  -- (5.5,1) node {$\bullet$}
+  -- (6,0) node[red] {$\bullet$}
+  -- (6.5,1) node {$\bullet$}
+  -- (7,2) node {$\bullet$}
+  ;
+  \draw[thick,dotted] (7,2) -- (7.5,3) node {$\bullet$};
+  \draw[thick] (7.5,3) -- (8,4) node {$\bullet$};
+\end{tikzpicture}

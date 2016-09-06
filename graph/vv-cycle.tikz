@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+  \draw[thick] (0,4) node {$\bullet$}
+  -- (0.5,3) node {$\bullet$};
+  \draw (0.75,3) node {$\bullet$};
+  \draw[thick,dotted] (0.75,3) -- (1.25,2) node {$\bullet$};
+  \draw (1.5,2) node {$\bullet$};
+  \draw (1.75,2) node {$\bullet$};
+  \draw[thick] (2,2) node {$\bullet$}
+  -- (2.5,1) node {$\bullet$};
+  \draw (2.625,1) node {$\bullet$};
+  \draw (2.75,1) node {$\bullet$};
+  \draw (2.875,1) node {$\bullet$};
+  \draw (3,1) node {$\bullet$};
+  \draw (3.125,1) node {$\bullet$};
+  \draw (3.25,1) node {$\bullet$};
+  \draw[thick] (3.375,1) node {$\bullet$}  
+  -- (3.875,0) node[red] {$\bullet$}
+  -- (4.375,1) node {$\bullet$};
+  \draw (4.5,1) node {$\bullet$};
+  \draw (4.625,1) node {$\bullet$};
+  \draw (4.75,1) node {$\bullet$};
+  \draw (4.875,1) node {$\bullet$};
+  \draw (5,1) node {$\bullet$};
+  \draw (5.125,1) node {$\bullet$};
+  \draw (5.25,1) node {$\bullet$}
+  -- (5.75,2) node {$\bullet$};
+  \draw (6,2) node {$\bullet$};
+  \draw (6.25,2) node {$\bullet$};
+  \draw[thick,dotted] (6.5,2) node {$\bullet$}
+  -- (7,3) node {$\bullet$};
+  \draw[thick] (7.25,3) node {$\bullet$}
+  -- (7.75,4) node {$\bullet$};
+ 
+  % \draw (4,2) node {$\bullet$};
+  % \draw[thick] (4.25,2) node {$\bullet$}
+  % -- (,2) node {$\bullet$};
+  % \draw[thick,dotted] (3,2) -- (3.5,3) node {$\bullet$};
+  % \draw[thick] (3.5,3) -- (4,4) node {$\bullet$};
+\end{tikzpicture}

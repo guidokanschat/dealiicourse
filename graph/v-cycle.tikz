@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+  \draw[thick] (0,4) node {$\bullet$}
+  -- (0.5,3) node {$\bullet$};
+  \draw[thick,dotted] (0.5,3) -- (1,2) node {$\bullet$};
+  \draw[thick] (1,2) -- (1.5,1) node {$\bullet$}
+  -- (2,0) node[red] {$\bullet$}
+  -- (2.5,1) node {$\bullet$}
+  -- (3,2) node {$\bullet$};
+  \draw[thick,dotted] (3,2) -- (3.5,3) node {$\bullet$};
+  \draw[thick] (3.5,3) -- (4,4) node {$\bullet$};
+\end{tikzpicture}
