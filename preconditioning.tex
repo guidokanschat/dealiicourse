@@ -1,0 +1,160 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Solving the discrete problems}
+  \begin{itemize}
+  \item Iterative solvers usually slow down when meshes get finer
+    \begin{itemize}
+    \item $\mathcal O(h^{-p})$ steps for differential operator of order $p$
+    \item Number of steps multiplied by 4 each refinement
+    \end{itemize}
+  \item Krylov space solvers accelerate somewhat
+    \begin{itemize}
+    \item Conjugate gradient method or GMRES
+    \item $\mathcal O(h^{-p/2})$ steps for differential operator of order $p$
+    \item Number of steps still doubles with each refinement
+    \end{itemize}
+  \item ``Preconditioning'' needed for optimality
+    \begin{gather*}
+      Ax=b \qquad \Rightarrow \qquad B^{-1}Ax = B^{-1}b.
+    \end{gather*}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Goal of preconditioning}
+  \begin{block}{Optimal complexity}
+    A solver has optimal complexity if a system with $n$ variables can
+    be solved with $\mathcal O(n)$ operations.
+  \end{block}
+  \begin{itemize}
+  \item Number of iterations independent of mesh size
+  \item Preconditioner can be evaluated in $\mathcal O(n)$ operations.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Examples for preconditioners}
+  \begin{gather*}
+    B^{-1}Ax = B^{-1}b.
+  \end{gather*}
+  \begin{itemize}
+  \item $B=I$: evaluation for free, but increasing number of steps
+  \item $B=A$: convergence in one step, but evaluation expensive
+    \pause
+  \item Multigrid methods: optimal
+    \begin{enumerate}
+    \item Apply one or few steps of a cheap iteration (smoother) on given level
+    \item Project residual to next coarser level
+    \item Apply the same method on the coarser level
+    \item Improve fine level result by coarse grid correction
+    \item Apply one or few smoothing steps on given level
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multigrid ingredients}
+  \begin{itemize}
+  \item Smoother
+    \begin{itemize}
+    \item (block-)Jacobi, (block-)Gauß-Seidel
+    \item overlapping Schwarz methods
+    \end{itemize}
+  \item Grid transfer
+    \begin{itemize}
+    \item embedding from coarse to fine
+    \item its $\ell_2$-adjoint from fine to coarse
+    \end{itemize}
+  \item a coarse grid solver
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The V-cycle}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+    \includegraphics[width=\textwidth]{graph/v-cycle}      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Recursion on level $\ell$
+      \begin{itemize}
+      \item 1 smoothing step
+      \item Call V-cycle on level $\ell-1$
+      \item 1 smoothing step
+      \end{itemize}
+      Solve on level 0
+    \end{column}
+  \end{columns}
+  \begin{center}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The W-cycle}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+    \includegraphics[width=\textwidth]{graph/w-cycle}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Recursion on level $\ell$
+      \begin{itemize}
+      \item 1 smoothing step
+      \item Call W-cycle on level $\ell-1$
+      \item Call W-cycle on level $\ell-1$
+      \item 1 smoothing step
+      \end{itemize}
+      Solve on level 0
+    \end{column}
+  \end{columns}
+  \begin{center}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The F-cycle}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+    \includegraphics[width=\textwidth]{graph/f-cycle}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Recursion on level $\ell$
+      \begin{itemize}
+      \item 1 smoothing step
+      \item Call F-cycle on level $\ell-1$
+      \item Call V-cycle on level $\ell-1$
+      \item 1 smoothing step
+      \end{itemize}
+      Solve on level 0
+    \end{column}
+  \end{columns}
+  \begin{center}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{The variable V-cycle}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+    \includegraphics[width=\textwidth]{graph/vv-cycle}      
+    \end{column}
+    \begin{column}{.5\textwidth}
+      Recursion on level $\ell$
+      \begin{itemize}
+      \item $2^{L-\ell}$ smoothing steps
+      \item Variable V-cycle on level $\ell-1$
+      \item $2^{L-\ell}$ smoothing steps
+      \end{itemize}
+      Solve on level 0
+    \end{column}
+  \end{columns}
+  \begin{center}
+  \end{center}
+\end{frame}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

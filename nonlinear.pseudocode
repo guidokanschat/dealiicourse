@@ -1,0 +1,10 @@
+create mesh and degrees of freedom
+
+for all Newton steps
+  create right hand side
+  create matrix
+  solve linear system
+  update solution
+endfor
+
+output results

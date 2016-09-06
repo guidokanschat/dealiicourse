@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Multigrid}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\input{preconditioning}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Tutorial step 16}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_8.html}}}
+  \begin{itemize}
+  \item Multigrid structures
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Multigrid background}
+\begin{frame}
+  \frametitle{Components of multigrid}
+  \begin{itemize}
+  \item Grid transfer between meshes: \lstinline!MGTransferPrebuilt!
+  \item Level matrices: \lstinline!mg::Matrix!
+  \item Smoothers:  \lstinline!mg::SmootherRelaxation!
+  \item Coarse grid solver  \lstinline!MGCoarseGridHouseholder!
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Multigrid and hanging nodes}
+  \begin{center}
+    \includegraphics[height=.5\textheight]{graph/hanging_nodes}    
+  \end{center}
+  \begin{itemize}
+  \item Edges with hanging nodes belong to the coarse level
+  \item Smoothing only on the fine level
+    \begin{itemize}
+    \item Zero boundary condition on the edge
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Matrices for multigrid}
+  \begin{itemize}
+  \item Build level matrices with eliminated refinement edge
+    \begin{itemize}
+    \item Coupling from interior to refinement edge eliminated
+    \end{itemize}
+  \item Two additional matrices needed for lost couplings
+    \begin{itemize}
+    \item Needed for computing the whole residual
+    \end{itemize}
+  \item[$\Rightarrow$] 3 sets of level matrices
+  \item Multilevel description of hanging nodes needed
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Member data in the application class}
+\begin{frame}
+  \frametitle{Member objects}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-1.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Setting up multilevel data}
+\begin{frame}
+  \begin{block}{Multilevel setup I}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step16-2.cc}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Multilevel setup II}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step16-2a.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Generic loops}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Generic loops through MeshWorker}
+  \begin{itemize}
+  \item Goal: see loops from an abstract point of view:
+      \begin{block}{Generic linear, stationary program}
+    \lstinputlisting{assembly2.pseudocode}
+  \end{block}  
+  \item Application program only implements the local operators
+    \item No handling of degrees of freedom or target objects needed
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Arguments to local integrator}
+  \begin{itemize}
+  \item\texttt{MeshWorker::DoFInfo}
+    \begin{itemize}
+    \item Information on the current cell and its degrees of freedom
+    \item Return values in base class \texttt{LocalResults}
+    \end{itemize}
+  \item\texttt{MeshWorker::IntegrationInfo}
+    \begin{itemize}
+    \item \texttt{FEValues}
+    \item Optional function values in quadrature points
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cell matrices}
+\begin{frame}
+  \frametitle{Class for local integration I}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step16-3.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Class for local integration II}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step16-3a.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Setting up the loop I: IterationInfo}
+  \begin{itemize}
+  \item Handle \texttt{FEValues} objects
+  \end{itemize}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\small]{tutcode/step16-3b.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}
+%   \frametitle{Setting up the loop II: Assembler}
+%   \begin{block}{}\footnotesize
+%     \lstinputlisting{tutcode/step39-6a.cc}
+%   \end{block}  
+%   \only<1>{\begin{block}{}\footnotesize
+%       \lstinputlisting{tutcode/step39-6b.cc}
+%     \end{block}}  
+%   \only<2->{\begin{block}{}\footnotesize
+%       \lstinputlisting{tutcode/step39-6c.cc}
+%     \end{block}
+%   \begin{block}{}\footnotesize
+%     \lstinputlisting{tutcode/step39-6d.cc}
+%   \end{block}}
+% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Setting up the loop III: run!}
+  \begin{block}{}\small
+    \lstinputlisting{tutcode/step39-7.cc}
+  \end{block}
+  \pause
+  \begin{block}{Multigrid}\small
+    \lstinputlisting{tutcode/step39-7b.cc}
+  \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Multilevel objects in \lstinline!solve()!}
+\begin{frame}
+  \frametitle{Transfer operators}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-4.cc}
+  \end{block}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Coarse grid solver}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-5.cc}
+  \end{block}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Smoother}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-6.cc}
+  \end{block}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{The \lstinline!Multigrid! object}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-7.cc}
+  \end{block}  
+\end{frame}
+
+\begin{frame}
+  \frametitle{The preconditioner}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step16-8.cc}
+  \end{block}  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Problems}
+\input{exercises/step16}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

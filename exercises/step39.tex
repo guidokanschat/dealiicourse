@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Problems}
+  \begin{itemize}
+  \item Add advection in the direction $(-1,-1)^T$ to the operator and
+    scale the Laplacian, such that you solve
+    \begin{gather*}
+      -a\Delta u + \left(
+      \begin{pmatrix}
+        -1\\-1
+      \end{pmatrix}
+      \cdot \nabla\right) u = f
+    \end{gather*}
+    \begin{block}{Hint}
+      \lstinline!namespace LocalIntegrators::Advection!      
+    \end{block}
+  \item Start with $a=1$ and reduce $a$.
+    \begin{itemize}
+    \item How does the solution change?
+    \item What happens to the linear solver?
+    \end{itemize}
+  \end{itemize}
+\end{frame}

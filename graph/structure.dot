@@ -1,0 +1,31 @@
+digraph G
+{
+  graph[rankdir="TB",aspect=1.5,bgcolor="transparent"];
+  
+  edge [fontname="FreeSans",fontsize=10,labelfontname="FreeSans",labelfontsize=10];
+  node [fontname="FreeSans",fontsize=10,shape=record];
+  FE [label="FiniteElement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Tria [label="Triangulation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  DoFHandler [label="DoFHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Quadrature [label="Quadrature",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Mapping [label="Mapping",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  FEValues [label="FEValues",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  MeshWorker [label="MeshWorker",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+  Forms [label="(Bi-)Linear Forms",height=0.2,width=0.4,color="black", fillcolor="cyan", style="filled"];
+  Linear [label="Discrete System",height=0.2,width=0.4,color="black", fillcolor="cyan", style="filled"];
+#  LinearSolver [label="Solver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+#  Output [label="Output",height=0.2,width=0.4,color="black", fillcolor="white", style="filled"];
+
+  Tria -> DoFHandler [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  FE -> DoFHandler [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  FE -> FEValues [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  Mapping -> FEValues [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  Quadrature -> FEValues [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  FEValues -> MeshWorker [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  FEValues -> Forms [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  Forms -> MeshWorker [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  DoFHandler -> MeshWorker [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+  MeshWorker -> Linear [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+#  Linear -> LinearSolver [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+#  LinearSolver -> Output [color="black",fontsize=10,style="solid",fontname="FreeSans"];
+}

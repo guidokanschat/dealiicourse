@@ -1,0 +1,11 @@
+for all mesh cells
+  clear local matrices
+  compute cell matrix
+  assemble local matrices into global
+endfor
+
+for all interfaces
+  clear local matrices
+  compute interface matrices
+  assemble local matrices into global
+endfor

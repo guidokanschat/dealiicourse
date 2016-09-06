@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Virtual Box]{Setting up the virtual box}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\subsection{Installing the virtual machine}
+\begin{frame}
+  \frametitle{Downloading the virtual machine}
+  \begin{enumerate}
+  \item Install the Oracle VM Virtual Box (Open Source)
+    \begin{itemize}
+    \item \url{www.virtualbox.org}
+    \item Packaged with many Linux distributions
+    \end{itemize}
+    \item Download the Virtual Machine Image from \url{dealii.org/download.html}
+    \item Start the Virtual Box manager and import the \texttt{.ova} file
+      \begin{itemize}
+      \item Adjust the settings for CPUs, Memory to be less than what
+        your machine has
+      \item Delete the shared folder entry
+      \end{itemize}
+    \item Start the newly imported virtual image
+  \end{enumerate}
+\end{frame}
+
+\subsection{Preparing dealii for our course}
+\begin{frame}
+  \frametitle{Preparing dealii for our course}
+  \begin{enumerate}
+  \item Start the terminal (second menu item in the top bar)
+  \item Run the following
+    \begin{block}{}
+      \lstinputlisting{code/vmsetup.sh}      
+    \end{block}
+  \item Edit \lstinline!setup.sh! and remove the line that contains
+    \begin{block}{}
+      \lstinline!git checkout v8.4.1!
+    \end{block}
+    \item Run \lstinline!setup.sh! 
+  \item Go and have coffee, lunch, dinner, etc.
+  \end{enumerate}
+\end{frame}
+
+\subsection{Downloading and setting up amandus}
+\begin{frame}
+  \frametitle{Downloading and setting up amandus}
+  \begin{enumerate}
+  \item From your home directory, run the following:
+    \begin{block}{}
+      \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
+    \end{block}
+  \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Installing]{Installing deal.II without virtual box}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\subsection{Requirements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Operating system}
+  \begin{itemize}
+  \item Linux (e.g. Ubuntu 14.04 or higher)
+    \begin{itemize}
+    \item g++, 
+    \end{itemize}
+  \item Mac OS X
+    \begin{itemize}
+    \item Install current XCode or MAC Ports
+    \end{itemize}
+  \item Windows with Virtual Box
+  \end{itemize}
+  These will 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Additional software}
+  \begin{itemize}
+  \item CMake (3.0 or higher)
+  \item perl (5.x or higher)
+  \item make or ninja as required by CMake
+  \item Some visualization software
+    \item Optional: 
+    \begin{itemize}
+    \item LAPACK, Arpack
+    \item doxygen and graphviz (for documentation only)
+    \item MPI, p4est (for distributed computing)
+    \item Trilinos, Petsc, Slepc (parallel linear algebra)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Downloading}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Downloading deal.II releases}
+  \begin{itemize}
+  \item Go to \texttt{\myurl{http://www.dealii.org}{www.dealii.org}}
+  \item In the navigation menu to the left, follow
+    \myurl{http://www.dealii.org/download/index.html}{Download}
+  \item Choose the release number (usually the latest)
+  \item Choose the package
+    \begin{itemize}
+    \item Full library
+    \item Premade documentation
+    \end{itemize}
+  \item Download the file (in \texttt{.tar.gz} format)
+  \item In an appropriate place, unpack and untar the file, which will
+    create a subdirectory \texttt{deal.II}.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Access the developing archive}
+  \begin{itemize}
+  \item The current state of deal.II is on github at\\
+    \texttt{https://github.com/dealii/dealii.git}
+  \item First time call\\
+    \texttt{\footnotesize git clone https://github.com/dealii/dealii.git}
+  \item make sure you regularly call\\
+    \texttt{git pull}
+  \item Release or subversion archive?
+    \begin{itemize}
+    \item Releases are tested!
+    \item Archive has the most current features
+    \end{itemize}
+    \pause
+    \item Contributing to deal.II
+      \begin{itemize}
+      \item Create an account and a fork on github
+      \item Familiarize yourself with the git workflow
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Configuring}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Configuring and installing}
+  \begin{itemize}
+  \item Unpack library into directory of your choice
+  \item Typically:
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily,keywordstyle=\ttfamily]
+mkdir dealii
+cd dealii
+tar xzf /download/path/deal.II-%\dealrelease%.tar.gz
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=../installed \
+    ../deal.II
+make install -j 4
+\end{lstlisting}
+\item Additional configuration options
+    \begin{itemize}
+    \item Disable/enable features
+    \item Add interfaces to external libraries
+    \item Menu with \texttt{ccmake .}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Running your first program}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Running the examples}
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily,keywordstyle=\ttfamily]
+cd dealii/installed/examples/step-1
+cmake .
+make run
+evince grid-2.eps
+\end{lstlisting}
+\end{frame}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

@@ -1,0 +1,81 @@
+\documentclass{beamer}
+\useoutertheme[height=10mm,width=14mm,hideallsubsections]{sidebar}
+\usetheme{PaloAlto}
+\usecolortheme{clover}
+\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{sections in toc}{[ball unnumbered]}
+\usepackage{times}
+\usefonttheme{structurebold}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx,color,multimedia,verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{gnuplot-lua-tikz}
+
+\def\dealrelease{8.2.1}
+\lstset{escapechar=\%}
+
+\title[deal.II Overview]{deal.II: An Overview}
+\author[Guido Kanschat]{Guido Kanschat}
+\institute[IWR, Uni Heidelberg]{IWR, Universität Heidelberg\\[2mm]
+\includegraphics[height=.2\textheight]{iwr}
+\hfill
+\includegraphics[height=.2\textheight]{dealclover}
+\hfill
+\includegraphics[height=.25\textheight]{unihd}
+}
+%
+\pgfdeclareimage[height=10mm]{logo}{dealclover}
+\logo{\pgfuseimage{logo}}
+%
+\def\R{\mathbb R}
+\def\T{\mathbb T}                           % triangulation
+\def\divh{\nabla_h\!\cdot}
+\def\red{\color{red}}
+\def\blue{\color{blue}}
+\def\black{\color{black}}
+\definecolor{green}{rgb}{0, .7, 0}
+\def\green{\color{green}}
+%
+%\input{only}
+%
+\hypersetup{urlcolor=blue}
+\newcommand{\myurl}[2]{\underline{\href{#1}{#2}}}
+\begin{document}
+\begin{frame}[plain]
+  \titlepage    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application Examples}
+\input{gallery}
+
+\section{Introduction to deal.II}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\subsection{History and philosophy}
+\input{introshort}
+\input{features}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Installing]{Installing deal.II}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\input{setup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Installing]{Generic loop programming}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\input{generic_loops}
+
+\section{Example}
+\input{example}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

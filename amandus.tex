@@ -1,0 +1,275 @@
+\section[Amandus]{The Amandus project}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+\subsection[Installation]{Download and installation}
+\begin{frame}
+  \frametitle{Downloading from bitbucket.org}
+  From your home directory, run the following:
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Goals}
+  \begin{itemize}
+  \item Avoid reimplementing and copying code
+    \begin{itemize}
+    \item Profit from updates faster
+    \end{itemize}
+  \item Generic and simple to use interface for
+    \begin{itemize}
+    \item Newton iterations
+    \item Timestepping
+    \item Eigenvalues
+    \item Multigrid
+    \end{itemize}
+  \item Computing interesting things with fast learning curve
+  \end{itemize}
+\end{frame}
+
+\subsection[Library]{The library classes and functions}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{The Application classes}
+  Encapsulate in main classes
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+      \item mesh and \lstinline!DoFHandler!
+      \item constraints for hanging nodes and boundary
+      \item matrices and vectors
+      \item linear solver (GMRES)
+      \item quadrature
+      \item parameters for control at runtime
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+      \item Assembling of matrices and residuals
+        \begin{itemize}
+        \item CG, DG, scalar and vector valued
+        \item automatic choice of quadrature etc.
+        \end{itemize}
+      \item Error estimation and evaluation
+      \item Multigrid or UMFPack solvers
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The loops}
+  \begin{itemize}
+  \item Loop over a sequence of meshes
+    \begin{itemize}
+    \item global refinement
+    \item adaptive refinement (requires estimator)
+    \end{itemize}
+  \item Different solvers require different loops
+    \begin{itemize}
+    \item linear
+    \item nonlinear
+    \item eigenvalue
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection[Models]{The model directories}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{Subdirectories for equations}
+  \begin{itemize}
+  \item \lstinline!laplace!
+  \item \lstinline!stokes!, \lstinline!elasticity!
+  \item \lstinline!maxwell!
+  \item \lstinline!advection!
+  \item \lstinline!darcy!, \lstinline!brinkman!
+  \item \lstinline!lotkavolterra!, \lstinline!brusselator!, \lstinline!readiff!
+  \item \lstinline!allen_cahn!, \lstinline!cahn_hilliard!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Contents of model directories}
+  \begin{itemize}
+  \item Local integrators
+    \begin{itemize}
+    \item \lstinline!matrix.h!, \lstinline!residual.h!
+    \end{itemize}
+  \item Main programs:
+    \begin{itemize}
+    \item \lstinline!*.cc!
+    \item Matching parameter files \lstinline!*.prm!
+    \end{itemize}
+  \item Consistency tests
+    \begin{itemize}
+    \item \lstinline!polynomial*!
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection[Usage]{Suggested usage}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{How to use Amandus: writing}
+  \begin{itemize}
+  \item Solve a given equation with new domain/boundary values
+    \begin{itemize}
+    \item Copy main program to \lstinline!my.cc! and adjust domain
+    \item Inhomogeneous boundary values:
+      \begin{itemize}
+      \item Always use nonlinear loop and adjust start vector
+      \end{itemize}
+    \end{itemize}
+  \item Solve a given equation with new coefficients
+    \begin{itemize}
+    \item Copy integrators to new file and edit
+    \item Copy main program to include new integrators
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How to use Amandus: compiling}
+  \begin{itemize}
+  \item \lstinline!cmake! will detect your new \lstinline!*.cc! file
+    \begin{itemize}
+    \item Simply run in your build directory
+      \begin{block}{}
+        \lstinline!cmake .!
+      \end{block}
+    \end{itemize}
+  \item Compile an application by
+    \begin{block}{}
+      \lstinline!make directory_executable!      
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+\subsection{Stokes equations}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{The Stokes equations}
+  \begin{itemize}
+  \item Two quantities
+    \begin{itemize}
+    \item Velocity vector field $u$ from space $V$
+    \item Pressure $p$ from space $Q$
+    \end{itemize}
+  \item Equations
+    \begin{gather*}
+      \arraycolsep1pt
+      \begin{matrix}
+        -\Delta u &-& \nabla p &=& f \\
+        \nabla \!\cdot\! u &&&=&0
+      \end{matrix}
+    \end{gather*}
+  \item Weak form: find $(u,p)$ such that
+    \begin{gather*}
+      (\nabla u, \nabla v) + (\nabla \!\cdot\! v,p)
+      + (\nabla \!\cdot\! u,q) = (f,v)
+      \quad
+      \forall v\in V, q\in Q.
+    \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Local integrator}
+    \lstinputlisting[basicstyle=\footnotesize]{code/stokes-1.cc}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Main program}
+    \lstinputlisting[basicstyle=\footnotesize]{code/stokes-2.cc}
+  \end{block}
+\end{frame}
+
+\subsection{Elasticity}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{Elasticity}
+  \begin{itemize}
+  \item Lamé-Navier equations
+    \begin{gather*}
+      2\mu \bigl((\epsilon(u), \epsilon(v)\bigr)
+      + \lambda \bigl(\nabla\!\cdot\!u,\nabla\!\cdot\!v\bigr)
+      = (f,v).
+    \end{gather*}
+  \item Strain tensor, symmetric gradient
+    \begin{gather*}
+      \epsilon(u) = \frac{\nabla u + (\nabla u)^T}{2}
+    \end{gather*}
+  \item Inhomogeneous boundary values through Newton's method
+    \begin{itemize}
+    \item Solve linear system with homogeneous boundary values
+    \item Have correct boundary values in start vector
+    \item Newton updates will never change the boundary values
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Eigenvalues}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{Eigenvalue computations}
+  \begin{itemize}
+  \item The variational eigenvalue problem: find $u\in V$ and $\lambda\in\mathbb C$ such that
+    \begin{gather*}
+      a(u,v) = \lambda (u,v)\quad\forall v\in V.
+    \end{gather*}
+    \begin{itemize}
+    \item The bilinear form of the differential operator on the left
+    \item The $L^2$-inner product on the right
+    \end{itemize}
+    \item Finite element formulation: find $u\in V$ and $\lambda\in\mathbb C$ such that
+    \begin{gather*}
+      a(u,v) = \lambda (u,v)\quad\forall v\in V.
+    \end{gather*}
+  \item Matrix form
+    \begin{gather*}
+      A u = \lambda M u
+    \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{The local integrator}
+    \lstinputlisting[basicstyle=\footnotesize]{code/eigen-1.cc}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{The main program}
+    \lstinputlisting[basicstyle=\footnotesize]{code/eigen-2.cc}
+  \end{block}
+\end{frame}
+
+\subsection[Allen-Kahn]{The Allen-Kahn equation}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}
+  \frametitle{The Allen-Kahn equation}
+  \begin{itemize}
+  \item Nonlinear, time dependent
+    \begin{gather*}
+      \partial_t u -\epsilon\Delta u + u (u^2-1) = 0
+    \end{gather*}
+  \item The nonlinear term has two stable attractors $\pm 1$
+  \item The Laplacian enforces continuity 
+  \end{itemize}
+\end{frame}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

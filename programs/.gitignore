@@ -1,0 +1,11 @@
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+shapes_q1
+shapes_dgq1
+shapes_rt0
+shapes_rt1
+*~
+*.gpl
+*.tex

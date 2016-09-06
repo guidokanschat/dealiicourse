@@ -1,0 +1,115 @@
+% $Id: step6.tex 4605 2014-01-30 08:49:42Z kanschat $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section[Adaptivity]{Adaptive refinement}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Tutorial step 6}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_6.html}}}
+  \begin{itemize}
+  \item Basic error estimation
+  \item Local mesh refinement strategy
+  \item Hanging nodes
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A basic error indicator}
+\begin{frame}
+  \frametitle{A basic error indicator}
+  \begin{block}{\lstinline!KellyErrorEstimator<dim>::estimate(...)!}
+    \begin{itemize}
+    \item Error estimation based on jumps of normal derivatives
+    \item Estimates roughness of the solution
+    \item Assigns an ``error'' to each cell
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Local refinement}
+\begin{frame}
+  \frametitle{Local refinement}
+  \begin{itemize}
+  \item Use cell wise error estimates to sort cells
+  \item Use a refinement strategy to mark cells
+  \end{itemize}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step6-1.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dealing with hanging nodes}
+\begin{frame}
+  \frametitle{Hanging nodes}
+  \begin{block}{\lstinline!ConstraintMatrix!}
+    \begin{itemize}
+    \item FE space must be conforming
+    \item Elimination of degrees from data structures is error prone
+    \item Instead, eliminate on linear algebra level
+    \item Constrain degrees of freedom on ``finer'' side
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Hanging nodes: additional setup}
+  \begin{itemize}
+  \item Setting up constraints
+    \begin{block}{}
+      \lstinputlisting{tutcode/step6-2.cc}
+    \end{block}
+  \item After creating the sparsity pattern
+    \begin{block}{}
+      \lstinputlisting{tutcode/step6-3.cc}
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Hanging nodes: linear algebra}
+  \begin{itemize}
+  \item Vectors should have zero entries at the hanging node:
+    condensed form
+    \begin{block}{}
+      \lstinputlisting{tutcode/step6-4.cc}
+    \end{block}
+  \item FE functions should interpolate at the hanging node:
+    distributed form
+    \begin{block}{}
+      \lstinputlisting{tutcode/step6-5.cc}
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Problems}
+\begin{frame}
+  \frametitle{Problems}
+  \begin{enumerate}
+  \item Change the mesh to \lstinline!GridGenerator::hyper_L!
+  \item Use \lstinline!Functions::LSingularityFunction! for boundary
+    values and zero for right hand side
+  \item Compute errors after each solution using
+    \begin{block}{}
+      \lstinputlisting{tutcode/step5-3.cc}
+    \end{block}
+  \item Run the program in optimized mode using
+    \begin{block}{}
+      \texttt{make release}
+    \end{block}
+  \item What is the order of convergence? Compare to uniform refinement!
+  \end{enumerate}
+\end{frame}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

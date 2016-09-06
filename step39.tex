@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{DG methods}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discontinuous Galerkin methods}
+
+\begin{frame}
+  \frametitle{Origin of DG methods}
+  \begin{itemize}
+  \item Discontinuous Galerkin methods were developed for hyperbolic PDE
+    \begin{itemize}
+    \item Linear transport: Reed/Hill, LeSaint/Raviart
+    \item Nonlinear conservation laws: Cockburn/Shu
+    \end{itemize}
+  \item They feature basis functions with no continuity across cell boundaries
+  \item Soon, an extension to singularly perturbed problems became
+    necessary
+    \begin{gather*}
+      -\varepsilon\Delta u + (w\!\cdot\!\nabla) u = f
+    \end{gather*}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{DG Methods for elliptic problems}
+  \begin{itemize}
+  \item Continuity is necessary for $H^1$-conformity
+  \item Modify bilinear form for \textbf{consistency}
+  \item Example: boundary edges
+    \begin{itemize}
+    \item<2-> \red Remove \black natural boundary condition
+    \item<3-> \blue Symmetrize the bilinear form \black
+    \item<3-> Additional terms are indefinite
+    \item<4-> \green Stabilize\black
+    \end{itemize}
+  \end{itemize}
+  \begin{align*}
+    (\nabla u, \nabla v)_\Omega&
+    \uncover<2->{\red -(\partial_n u, v)_{\partial \Omega}\black} 
+    \uncover<3->{\blue -(u, \partial_n v)_{\partial \Omega}\black}
+    \uncover<4->{\green +\tfrac{\kappa}{h}(u, v)_{\partial \Omega}\black}
+    \\&=
+    (f,v)_\Omega
+    \uncover<3->{\blue -(u^D, \partial_n v)_{\partial \Omega}\black}
+    \uncover<4->{\green +\tfrac{\kappa}{h}(u^D, v)_{\partial \Omega}\black}
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structure of DG code}
+  \begin{itemize}
+  \item Integrals over cells as before
+  \item Integrals over interfaces between cells, e.g.
+    \begin{gather*}
+      \int_F \bigl(u^L(x)-u^R(x)\bigr) \bigl(v^L(x)-v^R(x)\bigr)
+      \,ds
+    \end{gather*}
+    \begin{itemize}
+    \item Terms generate 4 matrices!
+    \end{itemize}
+  \item Same integrals with one side refined (hanging nodes)
+  \item Integrals over boundary faces
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structure of error estimates}
+  \begin{itemize}
+  \item Typically two components: cells and faces
+    \begin{align*}
+      \eta_K &= \| h_K^2 f+\Delta u_h\|_K \\
+      \eta_F &= \| h_F \operatorname{jump}(\partial_n u_h) \|_F
+    \end{align*}
+  \item Can be added up, such that $\eta_K$ is augmented by all
+    $\eta_F$ for this cell.
+  \item Results in a cell vector which can be used for refinement
+    strategy
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Generic loops}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Generic loops through MeshWorker}
+  \begin{itemize}
+  \item Goal: see loops from an abstract point of view:
+      \begin{block}{Generic linear, stationary program}
+    \lstinputlisting{assembly3.pseudocode}
+  \end{block}  
+  \item Application program only implements the local operators
+    \item No handling of degrees of freedom or target objects needed
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Arguments to local integrator}
+  \begin{itemize}
+  \item\texttt{MeshWorker::DoFInfo}
+    \begin{itemize}
+    \item Information on the current cell and its degrees of freedom
+    \item Return values in base class \texttt{LocalResults}
+    \end{itemize}
+  \item\texttt{MeshWorker::IntegrationInfo}
+    \begin{itemize}
+    \item \texttt{FEValues}
+    \item Optional function values in quadrature points
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{The local integrator class}
+  \begin{block}{}\small
+    \lstinputlisting{tutcode/step39-1.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]
+  \frametitle{The cell matrix}
+  \begin{block}{}\footnotesize
+    \lstinputlisting{code/cell_matrix.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]
+  \frametitle{The cell matrix}
+  \begin{block}{}\small
+    \lstinputlisting{code/cell_matrix2.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{The boundary matrix}
+  \begin{block}{}\footnotesize
+    \lstinputlisting{tutcode/step39-3.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{The interface matrix}
+  \begin{block}{}\footnotesize
+    \lstinputlisting{tutcode/step39-4.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Setting up the loop I: IterationInfo}
+  \begin{itemize}
+  \item<1-> Handle \texttt{FEValues} objects
+  \item<2-> Provide values of data vectors
+  \end{itemize}
+  \only<1>{\begin{block}{Assemble matrix}\small
+    \lstinputlisting{tutcode/step39-5.cc}
+  \end{block}}
+  \only<2>{\begin{block}{Compute estimator}\footnotesize
+    \lstinputlisting{tutcode/step39-5a.cc}
+  \end{block}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Setting up the loop II: Assembler}
+  \begin{block}{}\footnotesize
+    \lstinputlisting{tutcode/step39-6a.cc}
+  \end{block}  
+  \only<1>{\begin{block}{}\footnotesize
+      \lstinputlisting{tutcode/step39-6b.cc}
+    \end{block}}  
+  \only<2->{\begin{block}{}\footnotesize
+      \lstinputlisting{tutcode/step39-6c.cc}
+    \end{block}
+  \begin{block}{}\footnotesize
+    \lstinputlisting{tutcode/step39-6d.cc}
+  \end{block}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Setting up the loop III: run!}
+  \begin{block}{}\small
+    \lstinputlisting{tutcode/step39-7.cc}
+  \end{block}
+  \pause
+  \begin{block}{Multigrid}\small
+    \lstinputlisting{tutcode/step39-7b.cc}
+  \end{block}
+\end{frame}
+
+\subsection{Problems}
+\input{exercises/step39}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

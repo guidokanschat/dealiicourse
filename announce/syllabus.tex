@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{hyperref}
+\parindent0pt
+\parskip 1ex plus 1ex
+\addtolength{\topmargin}{-1in}
+\addtolength{\textheight}{1.5in}
+\begin{document}
+\title{Partial differential equations with deal.II.\\A short course}
+\author{Guido Kanschat, IWR, Heidelberg University}
+\date{Pacific Institute for Mathematical Sciences (PIMS)\\August 2016}
+\maketitle
+\begin{abstract}
+  In this class, we introduce into using the finite element library
+  deal.II in order to solve partial differential equations. The class
+  covers basic topics from installing the library and adding support
+  for auxiliary software to setting up a mesh. It advances to defining
+  various finite element spaces on such a mesh and the implementation
+  of bilinear forms. We will cover the implementation of discontinuous
+  Galerkin methods as well as multigrid solvers and
+  preconditioners. The capabilities of deal.II for multithreading and
+  message passing paralelization will be introduced.  The course
+  discusses applications like potential problems, linear and nonlinear
+  elasticity, incompressible flow, porous media flow, Maxwell
+  eigenvalue problems, and possibly applications contributed by the
+  audience.
+\end{abstract}
+
+\subsection*{Course outline}
+
+The course will be given in 10 lectures with time for programming
+after each lecture. Participants should have deal.II and amandus installed 
+
+\begin{enumerate}
+\item Grand overview of deal.II and details of the installation process.
+\item Creating and refining meshes. Setting up finite element spaces.
+\item A first Poisson solver
+\item A state-of-the-art multilevel Poisson solver with discontinuous
+  Galerkin methods
+\item I have an equation and want to solve it. No more. Amandus.
+\item Mixed finite elements
+\item Eigenvalue problems
+\item Exploring error estimation and adaptive refinement
+\item Multigrid preconditioning
+\item Parallelization
+\end{enumerate}
+Deviations from this schedule can be agreed on with the participants.
+
+\subsection*{Prerequisites}
+Participants should have a basic general knowledge of the finite
+element method as well as of C++.
+
+Software should be downloaded (see below) and tested on participants'
+computers.
+
+
+\subsection*{Downloading and installation}
+
+We will use the program package deal.II and the application framework
+amandus which is built on top of it. It will simplify and speed up the
+progress of participants considerably, if both are already
+preinstalled on the participants' computers.
+
+The widely used (more than 500 downloads per month) finite element
+library deal.II can be downloaded from
+\begin{center}
+ \url{www.dealii.org}. 
+\end{center}
+For this class, we recommend following the instructions for the
+developer version, which involves cloning from github. For beginners,
+it is recommended to install deal.II as standard installation without
+support for MPI, Petsc and Trilinos. If parallelization is an
+immediate objective, MPI and Trilinos support should be
+activated. Petsc is only recommended if it is preinstalled on your
+computer.
+
+Amandus is a small package simplifying the implementation of a lot of
+applications. It can be cloned from bitbucket at
+\begin{center}
+  \url{https://bitbucket.org/guidokanschat/amandus}.
+\end{center}
+Instructions for installation AFTER deal.II can be found under the
+link above.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

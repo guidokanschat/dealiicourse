@@ -1,0 +1,5 @@
+for all mesh cells
+  clear local matrix
+  compute local matrix
+  assemble local matrix into global
+endfor

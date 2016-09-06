@@ -1,0 +1,63 @@
+\section[Local refinement]{Locally refined meshes}
+
+\begin{frame}
+  \frametitle{Hanging nodes}
+  \begin{center}
+    \includegraphics[height=.5\textheight]{graph/hanging_nodes}    
+  \end{center}
+  \begin{itemize}
+  \item Basis functions must be conforming
+    \item Constraints on the refined side
+    \begin{itemize}
+      \item Algebraic
+      \item Only depend on shape functions and node functionals
+      \item Can be precomputed for every finite element
+    \end{itemize}
+  \item Constrained degrees of freedom do not actually exist
+    \begin{itemize}
+    \item Should remain zero during linear solving
+    \item Must be set correctly for visualization
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\lstinline!ConstraintMatrix!}
+  Constrains hanging nodes and boundary values
+  \begin{itemize}
+  \item \lstinline!ConstraintMatrix::distribute_local_to_global()!
+    \begin{itemize}
+    \item Assembles cell matrices and vectors into global vectors
+    \item Ensures all constrained degrees of freedom remain zero
+    \end{itemize}
+  \item \lstinline!ConstraintMatrix::distribute()!
+    \begin{itemize}
+    \item Modifies a constrained global vector such that the finite
+      element function can be evaluated for quadrature and
+      visualization
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Adaptive refinement}
+  \begin{itemize}
+  \item Refinement indicator
+    \begin{itemize}
+    \item Error estimator
+    \item Roughness indicator (Zienkiewicz/Zhou, Kelly et all)
+    \end{itemize}
+  \item Refinement strategy
+    \begin{itemize}
+    \item Refine a certain number of the total number of cells
+    \item Refine such that accumulated indicator values are a certain
+      fraction of the estimate
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\input{exercises/adaptive}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

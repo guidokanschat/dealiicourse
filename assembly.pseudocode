@@ -1,0 +1,11 @@
+for all mesh cells
+  clear local matrix
+  for all quadrature points
+    for all shape functions
+      for all test functions
+        add contribution to local matrix
+      endfor
+    endfor
+  endfor
+  assemble local matrix into global
+endfor

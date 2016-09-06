@@ -1,0 +1,43 @@
+% $Id: step5.tex 4605 2014-01-30 08:49:42Z kanschat $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section[Refinement]{Refinement loop}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Tutorial step 5}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_5.html}}}
+  \begin{itemize}
+  \item Reading a mesh file
+  \item Mesh refinement loop
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Reading a mesh from a file}
+\begin{frame}
+  \frametitle{Reading a mesh}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step5-1.cc}    
+  \end{block}
+  \begin{itemize}
+  \item Alternative to \lstinline!GridGenerator!
+  \item Supported formats: UCD, DB mesh, XDA, Gmesh, NetCDF-TAU, TecPlot
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Looping over different meshes}
+\begin{frame}
+  \frametitle{Looping over meshes}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step5-2.cc}
+  \end{block}  
+\end{frame}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

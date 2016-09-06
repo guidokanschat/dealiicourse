@@ -1,0 +1,161 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Loop structures and data requirements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{The assembly loop}
+  \begin{gather*}
+    a_{ij} = \sum_{Z\in \mathbb T_h} a(\phi_j, \phi_i)
+  \end{gather*}
+  \begin{block}{}
+    \small
+    \lstinputlisting{assembly.pseudocode}
+  \end{block}  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \begin{block}{The abstract assembly loop}
+    \lstinputlisting{assembly2.pseudocode}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \begin{block}{The dg assembly loop}
+    \lstinputlisting{assembly3.pseudocode}
+  \end{block}  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \begin{block}{The vectorized dg assembly loop}
+    \lstinputlisting{assembly3a.pseudocode}
+  \end{block}  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Task based parallelism by abstract loops}
+  \begin{itemize}
+  \item Users only provide local operators, only read local data
+  \item Abstract loops enable reimplementation in the library
+    \begin{itemize}
+    \item Workstream with ``reliable'' accumulation, but sequential bottleneck
+    \item Graph coloring and all parallel accumulation
+    \item Off-loading to GPU or Xeon Phi
+      \begin{itemize}
+      \item Needs small code!
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{FEM for linear problems}
+  \begin{block}{Generic linear, stationary program}
+    \lstinputlisting{linear.pseudocode}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{FEM for nonlinear problems}
+  \begin{block}{Generic nonlinear, stationary program}
+    \lstinputlisting{nonlinear.pseudocode}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{FEM for instationary nonlinear problems}
+  \begin{block}{Generic nonlinear, instationary program}
+    \lstinputlisting{timestepping.pseudocode}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generic loop interface in deal.II}
+  \lstinline!MeshWorker! class uses three objects
+  \begin{enumerate}
+  \item Local operator
+    \begin{itemize}
+    \item  provided by user
+    \end{itemize}
+  \item Output object
+      \begin{itemize}
+      \item Matrix data
+      \item Vector data
+      \item Functionals and estimators
+      \end{itemize}
+  \item Data object
+      \begin{itemize}
+      \item Receives any number and any kind of (named) data
+      \item Automatically evaluates finite element functions on each cell
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+\subsection{Local operators}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Local operators (class style)}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\footnotesize]{code/local_integrator.h}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Examples for local operators}
+  \begin{block}{Laplace matrix}
+    \lstinputlisting[basicstyle=\footnotesize]{code/laplace_matrix.h}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Examples for local operators}
+  \begin{block}{The lambda version}
+    \lstinputlisting[basicstyle=\footnotesize]{code/laplace_lambda.h}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Examples for local operators}
+  \begin{block}{Allen-Cahn Jacobian}
+    \lstinputlisting[basicstyle=\footnotesize]{code/allencahn_matrix.h}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Examples for local operators}
+  \begin{block}{Allen-Cahn residual}
+    \lstinputlisting[basicstyle=\footnotesize]{code/allencahn_residual.h}    
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]
+  \frametitle{Assembling the matrix}
+  \lstinputlisting[basicstyle=\footnotesize]{code/matrix.cc}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]
+  \frametitle{Assembling the multilevel matrices}
+  \lstinputlisting[basicstyle=\footnotesize]{code/mgmatrix.cc}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t]
+  \frametitle{Assembling the right hand side}
+  \lstinputlisting[basicstyle=\footnotesize]{code/rhs.cc}
+\end{frame}
+

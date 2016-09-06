@@ -1,0 +1,73 @@
+% $Id: step4.tex 4605 2014-01-30 08:49:42Z kanschat $
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section[DIP]{Dimension independent programming}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Tutorial step 4}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_4.html}}}
+  \begin{itemize}
+  \item Dimension independent programming
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dimension templates}
+\begin{frame}[fragile]
+  \frametitle{Dimension templates}
+  \begin{itemize}
+  \item Most of deal.II classes come in the form
+    \begin{block}{}
+\begin{lstlisting}
+template <int dim> class ClassName;
+\end{lstlisting}      
+    \end{block}
+  \item We have used them so far as
+    \begin{block}{}
+\begin{lstlisting}
+Triangulation<2>
+DoFHandler<2>
+\end{lstlisting}      
+    \end{block}
+  \item Now we make our own class a dimension template
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}[fragile]
+  \frametitle{Writing a dimension template}
+  \begin{itemize}
+  \item Make the class a template
+    \begin{block}{}
+      \only<1>{\lstinline!class LaplaceProblem \{\};!}
+      \only<2->{\lstinline!template <int dim> class LaplaceProblem \{\};!}      
+    \end{block}
+  \item<3-> Replace all instantiations with dimension 2 by
+    \lstinline!dim!.
+    \begin{block}{}      
+      \only<3>{\lstinputlisting{tutcode/step4-1.cc}}
+      \only<4->{\lstinputlisting{tutcode/step4-2.cc}}
+    \end{block}
+  \item<5-> Make sure you never use concrete numbers
+    \begin{block}{}
+      \only<5>{\lstinputlisting{tutcode/step4-3.cc}}
+      \only<6->{\lstinputlisting{tutcode/step4-4.cc}}      
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}[fragile]
+  \frametitle{Using the dimension template}
+  \begin{block}{}
+    \lstinputlisting{tutcode/step4-5.cc}    
+  \end{block}
+\end{frame}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

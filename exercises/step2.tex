@@ -1,0 +1,24 @@
+\begin{frame}
+  \frametitle{Exercises: finite element spaces and sparsity}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_2.html}}}
+  \begin{itemize}
+  \item Additional information:
+    \begin{itemize}
+    \item \texttt{SparsityPattern::bandwidth()}
+    \item \texttt{SparsityPattern::n\_nonzero\_elements()}
+    \end{itemize}
+  \item Problems: study how these numbers depend on
+    \begin{itemize}
+    \item finite element degree
+    \item mesh refinement
+    \item space dimension
+    \item Choice of
+      \begin{itemize}
+      \item \lstinline!FE_Q(k) ! $k=1,2,3$
+      \item \lstinline!FE_DGQ(k) ! $k=0,1,2,3$
+      \item \lstinline!FE_DGP(k) ! $k=0,1,2,3$
+      \item \lstinline!FE_Nedelec(k) ! $k=1,2$
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}

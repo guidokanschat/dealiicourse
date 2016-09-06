@@ -1,0 +1,133 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section[Poisson]{Solving a Poisson problem}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Tutorial Step 3}
+  {\footnotesize{\url{http://www.dealii.org/\dealrelease/doxygen/deal.II/step_3.html}}}
+  \begin{itemize}
+  \item Defining a class for the application
+  \item Creating a finite element space on a mesh
+  \item Building a system matrix and right hand side
+  \item Solving the discrete linear system
+  \item Visualization
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Application classes}
+\begin{frame}
+  \begin{block}{The application class}
+    \lstinputlisting{tutcode/step3-1.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{The private parts of the application class}
+    \lstinputlisting[basicstyle=\footnotesize]{tutcode/step3-2.cc}    
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{The constructor}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-3.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{run!}
+  \begin{block}{}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-5.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Finite element spaces}
+\begin{frame}
+  \begin{block}{Creating the mesh}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-4a.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{Generate the finite element space}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-4.cc}
+  \end{block}
+  \begin{itemize}
+  \item Mapping between linear algebra and functions
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The linear system}
+\begin{frame}
+  \frametitle{Assembling the system}
+  \begin{itemize}
+  \item<+-> A loop over all active cells
+  \item<+-> Creating a cell matrix and cell vector
+  \item<+-> Access to shape function values in quadrature points:
+    \begin{block}{\lstinline!FEValues: public FEValuesBase!}
+    \begin{itemize}
+    \item function values and derivatives
+    \item mapped geometry
+    \item Allows for optimization when computing values
+    \end{itemize}
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{Using FEValues}
+  \lstinputlisting[basicstyle=\footnotesize]{tutcode/step3-6.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{Integrating the matrix}
+  \lstinputlisting[basicstyle=\footnotesize]{tutcode/step3-6a.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \begin{block}{Boundary conditions}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-7.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solving}
+\begin{frame}
+  \begin{block}{Solving the linear system}
+  \lstinputlisting[basicstyle=\small]{tutcode/step3-8.cc}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Visualization}
+\begin{frame}
+  \frametitle{Visualization}
+  \begin{block}{}
+    \lstinputlisting[basicstyle=\small]{tutcode/step3-9.cc}
+  \end{block}
+  \begin{itemize}
+  \item Supports gnuplot, VTK, UCD, OpenDX, TecPlot, Povray, VTU, EPS
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Problems}
+\input{exercises/step3}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

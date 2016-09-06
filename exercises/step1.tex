@@ -1,0 +1,20 @@
+\begin{frame}
+  \frametitle{Problems: meshes}
+  \begin{enumerate}
+    \item Locally refined square mesh
+    \begin{enumerate}
+    \item Create a mesh for the square $[-1,1]^2$ and refine once globally.
+    \item On a given mesh refine all cells with at least one vertex in
+      the cicle of radius $1/8$ around the origin. Repeat 6 times to
+      resolve the circle.
+    \item Visualize the result (gnuplot, SVG, or VTK).
+    \end{enumerate}
+  \item Refinement smoothing: same as before, but refine in such a way
+    that no cells sharing a common vertex differ by more than one
+    level. Hint: constructor of \lstinline!Triangulation!
+  \item Guess from the different results what the effect of
+    \lstinline!set_all_manifold_ids! is
+  \item Generate a half open shell. How do inner and outer radius
+    affect the shape of cells? Find a way to visualize.
+  \end{enumerate}
+\end{frame}

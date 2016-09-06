@@ -1,0 +1,11 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
+FIND_PACKAGE(deal.II 8.0 REQUIRED
+  HINTS
+  ${DEAL_II_DIR} ../ ../../ $ENV{DEAL_II_DIR})
+DEAL_II_INITIALIZE_CACHED_VARIABLES()
+PROJECT(tutorial)
+
+FOREACH(file shapes_q1 shapes_dgq1 shapes_rt0 shapes_rt1)
+  ADD_EXECUTABLE(${file} ${file}.cc)
+  DEAL_II_SETUP_TARGET(${file})
+ENDFOREACH()

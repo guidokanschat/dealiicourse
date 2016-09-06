@@ -1,0 +1,182 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}
+  \frametitle{deal.II in a nutshell}
+  \begin{center}
+    \includegraphics[height=5ex]{deallogo}
+  \end{center}
+  is
+  \begin{itemize}
+  \item a programming library in C++
+  \item a toolbox for development
+  \end{itemize}
+  \pause
+  is not
+  \begin{itemize}
+  \item a solver for wave/flow/radiation/electromagnetics
+  \item a programming language for numerical PDE
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A short history of deal.II}
+  \begin{description}
+  \item[1990-1992] Discussion among students on simplifying the task of implementing finite element methods
+  \item[1992-1997] Development of DEAL in order to support a group of PhD students in Heidelberg
+  \item[1997-1998] Redesign of the whole core and publication of deal.II
+  \item[1998-2012] Continuing development in a small, growing group of developers
+  \item[since 2012] Transition to a community project
+  \end{description}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}
+  \frametitle{deal.II developers (probably incomplete)}
+  \begin{itemize}
+  \item deal.II transitions from a group project to a
+    community project
+  \item \footnotesize Contributors: Moritz Allmaras, Michael Anderson,
+    Wolfgang Bangerth, Andrea Bonito, Markus Bürg, John Burnell, Brian
+    Carnes, Ivan Christov, Chih-Che Chueh, Marco Engelhard, Patrick Esser, Jörg
+    Frohne, Joscha Gedicke, Thomas Geenen, Martin Genet, Christian Goll, Ralf
+    Hartmann, Eric Heien, Timo Heister, Luca Heltai, Bärbel Janssen,
+    Xing Jin, Oliver Kayser-Herold, Seungil Kim, Benjamin Shelton
+    Kirk, Angela Klewinghaus, Katharina Kormann, Martin Kronbichler,
+    Tobias Leicht, Yan Li, Vijay Mahadevan, Matthias Maier, Cataldo
+    Manigrasso, Andrew McBride, Scott Miller, Helmut Müller, Stefan
+    Nauber, David Neckels, M. Sebastian Pauletti, Jean-Paul Pelteret,
+    Jonathan Pitt, Adam Powell IV, Florian Prill, Daniel Castanon
+    Quiroz, Michael Rapson, Thomas Richter, Abner Salgado-Gonzalez,
+    Anna Schneebeli, Jan Schrage, Ralf B. Schulz, Noman Shakir, Jason Sheldon,
+    Michael Stadler, Martin Steigemann, Franz-Theo Suttmeier, Habib
+    Talavatifard, Christophe Trophime, Yaqi Wang, Sven Wetterauer,
+    Joshua White, Toby D. Young
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Assessment of user base}
+  \begin{itemize}
+  \item Free downloads, free redistribution
+    \begin{itemize}
+    \item no reliable numbers
+    \end{itemize}
+  \item Discussion group
+    \begin{itemize}
+    \item 705 members (June 2016)
+    \end{itemize}
+  \item Github statistics (June 2016)
+    \begin{itemize}
+    \item 169 forks
+    \item Release 8.4.1: 1212 downloads in three months
+    \item Release 8.3.0: 6444 downloads since 8/2015
+    \item Release 8.2.1: 4333 downloads since 1/2015
+    \end{itemize}
+  \item Citations of various papers
+    % 697 + 324 + 92 + 
+    \begin{itemize}
+    \item approx 1200 (Google Scholar)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}
+  \frametitle{Goals of deal.II}
+  \begin{enumerate}
+    \item<+-> Research
+  \begin{itemize}
+  \item aid developing and testing new numerical algorithms
+    \begin{itemize}
+    \item Provide full control over all aspects of a program
+    \item Be able to assess feasibility and efficiency
+    \end{itemize}
+  \item compromise between ease of use and efficiency
+    \begin{itemize}
+    \item Advanced/3D applications need high efficiency
+    \item Support development of complex algorithms
+    \item New algorithms for new hardware
+    \end{itemize}
+  \end{itemize}  
+  \item<+-> Education
+  \only<2->{\begin{itemize}
+    \item teach a general purpose programming language
+    \item provide intuitive tool for class and thesis projects
+    \end{itemize}}
+  \item<+-> Industrial Application
+    \only<3->{\begin{itemize}
+      \item Not a development goal in itself
+      \item Several companies have inquired and use it
+      \item Licensing: LGPL enables applicability
+      \end{itemize}}
+  \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Programming paradigm}
+  \begin{block}{``Development by homotopy''}
+    \begin{enumerate}
+    \item Start with a simple application and test it
+    \item Expand it step by step and test them
+    \end{enumerate}
+  \end{block}
+  \pause
+  Examples:
+  \begin{itemize}
+  \item<+-> From 2D to 3D
+    \begin{itemize}
+    \item change a template parameter
+    \end{itemize}
+  \item<+-> From regular to adaptive meshes
+    \begin{itemize}
+    \item 5 statements
+    \end{itemize}
+  \item<+-> From Gauss-Seidel to multigrid
+    \begin{itemize}
+    \item 30 statements
+    \end{itemize}
+  \item<+-> From sequential to multithreading
+    \begin{itemize}
+    \item configuration parameter
+    \end{itemize}
+  \item<+-> From sequential to message passing
+    \begin{itemize}
+    \item 20 statements
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}
+  \frametitle{Online documentation}
+  \begin{itemize}
+  \item Reference manual
+    \begin{itemize}
+    \item Automatically generated with Doxygen
+    \item approximately 550 classes
+    \item more than 2200 files
+    \item graphics and graphical hierarchies
+    \item several thousand print pages
+    \end{itemize}
+  \item Tutorial
+    \begin{itemize}
+    \item 6 steps to an adaptive FEM solver
+    \item 50+ more specialized example programs for diverse topics
+    \end{itemize}
+  \item Email discussion group
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}
+  \frametitle{The deal.II web page}
+  \begin{center}
+    \texttt{\Large\href{http://www.dealii.org}{www.dealii.org}}
+  \end{center}
+\end{frame}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

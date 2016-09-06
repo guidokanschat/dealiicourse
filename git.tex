@@ -1,0 +1,226 @@
+\section[Git]{Using git for your own work}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+\subsection{Git basics}
+\begin{frame}
+  \frametitle{Revision control systems}
+  \begin{itemize}
+  \item Allow you to regularly archive your work
+    \begin{itemize}
+    \item You can retrieve a previous status if you made a mistake
+    \end{itemize}
+  \item Allow you to store your work on an external server
+    \begin{itemize}
+    \item No big damage if your hard disk crashes
+    \end{itemize}
+  \item Organize your work between several computers
+    \begin{itemize}
+    \item No question which version is the latest
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some revision control systems}
+  \begin{itemize}
+  \item RCS, CVS
+    \begin{itemize}
+    \item grandparents enjoying retirement
+    \end{itemize}
+  \item SVN
+    \begin{itemize}
+    \item Long time favorite with server infrastructure
+    \end{itemize}
+  \item Git
+    \begin{itemize}
+    \item Very powerful and flexible
+    \item Easy server setup
+    \item Public servers avaliable
+      \begin{itemize}
+      \item Github
+      \item Bitbucket: free private repositories with university email address
+      \end{itemize}
+    \end{itemize}
+  \item Mercurial
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{The lonely git cycle}
+  \begin{block}{First time only}
+    \begin{lstlisting}[language=bash]
+git clone repository-address
+    \end{lstlisting}
+    \end{block}
+    \begin{block}{Everytime before you start something new}
+    \begin{lstlisting}[language=bash]
+git pull
+    \end{lstlisting}      
+    \end{block}
+    \begin{block}{Everytime you finish something}
+      \begin{lstlisting}[language=bash]
+git commit -am 'message'
+git push
+     \end{lstlisting}
+    \end{block}
+    
+Pushing more than hourly is not a bad idea
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Other important commands}
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git status
+    \end{lstlisting}      
+    \end{block}
+    \begin{itemize}
+    \item Modified files that need commit
+    \item Untracked files that may need add
+    \item Your directory is ahead of origin and needs push
+    \end{itemize}
+
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git add filename
+    \end{lstlisting}      
+    \end{block}
+    \begin{itemize}
+    \item Add a newly created file to the repository
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Notes on commit}
+  \begin{itemize}
+  \item Commits are atoms
+    \begin{itemize}
+    \item They constitute an inseparable logical unit
+    \item They define stages and steps in your development
+    \end{itemize}
+  \item Keep commits constrained to single issues
+    \begin{itemize}
+    \item If you change two separate issues in your code, commit them
+      separately!
+    \item Provide short, but meaningful commit messages
+    \end{itemize}
+  \item Commits work by comparing text line by line
+    \begin{itemize}
+    \item Keep reformatting to a minimum
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Git for collaboration}
+\frame{\tableofcontents[currentsection,subsectionstyle=show/shaded/hide]}
+
+\begin{frame}[fragile]
+  \frametitle{Special rules for big collaborations}
+  \begin{itemize}
+  \item Create your own branch for development
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git checkout -b my_branch
+    \end{lstlisting}      
+    \end{block}
+    \item Regularly update your master branch
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git checkout master
+git pull
+    \end{lstlisting}      
+    \end{block}
+    \item Keep your branch current
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git checkout my_branch
+git rebase master
+git push -f
+    \end{lstlisting}      
+    \end{block}
+    Warning: rebase and the '-f' rewrite history. Only do this on
+    your own branch!
+    \item When your development has converged
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git checkout master
+git merge my_branch
+git push
+    \end{lstlisting}      
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{alertblock}{Warning!!!}
+    Never edit the master branch of a busy repository!
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Conflict resolution}
+  \begin{itemize}
+  \item Commit, merge and rebase are based on line-by-line text comparison
+  \item Sometimes, two people edited the same lines
+    \begin{itemize}
+    \item Git cannot determine which update should persist
+    \end{itemize}
+  \item You will be informed of a conflict and must resolve it before
+    continuing
+    \begin{itemize}
+    \item Blocks of text of the form
+\begin{verbatim}
+<<<<<<< HEAD
+text somebody else committed
+=======
+text I committed
+>>>>>>> Last commit comment
+\end{verbatim}
+    \item Make up your mind on the best solution
+    \begin{block}{}
+    \begin{lstlisting}[language=bash]
+git add fixed_file
+git rebase --continue
+    \end{lstlisting}      
+    \end{block}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Forking a repository}
+  \begin{itemize}
+  \item When you push your branch to a joint repository, it becomes
+    available to everybody
+  \item Forking a repository
+    \begin{itemize}
+    \item Supported by Github and Bitbucket
+    \item Creates your own copy on the same server
+    \item Nobody cares what you push
+    \item Bitbucket allows synchronization by pressing a button
+    \end{itemize}
+  \item Pull requests
+    \begin{itemize}
+    \item Branches can be submitted by pressing a button on the web site
+    \item Pull requests provide a good interface for code review
+    \item They put a barrier on sneaking in unwanted changes
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{alertblock}{Warning!!!}
+    Even if you have your own fork: never edit the master branch of a
+    busy repository!
+  \end{alertblock}
+\end{frame}
+
+
+\subsection{Problems}
+\input{exercises/git}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

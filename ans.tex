@@ -1,0 +1,131 @@
+\section[Why Software?]{Why should mathematicians use high level software?}
+\frame{\tableofcontents[currentsection,hideothersubsections]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{State of Scientific Computation}
+  % [Apologies for the fact that this is mostly from a numerical PDE
+  % perspective]
+  % \vfill
+  \begin{itemize}
+  \item Numerical methods become more complex
+    \begin{itemize}
+    \item linear/nonlinear solvers
+    \item multigrid
+    \item adaptivity
+    \item parameter estimation/optimization
+    \end{itemize}
+  \item We have the methods to tackle challenging applications
+  \item Modern computers add challenges when it comes to ``efficient''
+    implementation
+  \end{itemize}
+  \pause
+  \begin{block}{}
+``The future of Scientific Computing has just started'' (P.~Deuflhard, 2007)    
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Academic Software Development}
+  The ``graduate student cycle''
+  \begin{itemize}
+  \item write a finite element program as a class project
+  \item Extend it to provide numerical experiments for PhD project
+  \item Publish results
+  \item Successor begins from scratch
+  \end{itemize}
+  \pause
+  \begin{block}{}
+    Scientific computation remains limited to project which can be
+    solved during the ``life time'' of a PhD student.
+  \end{block}
+  \pause
+  Exceptions
+  \begin{itemize}
+  \item National labs
+  \item Few centers of scientific computation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extension of the Graduate Student Cycle}
+  \begin{itemize}
+  \item Student becomes professor
+  \item and makes own students continue developing the code
+  \item New functionality added over generations, resulting in
+    \begin{itemize}
+    \item  Monolithic software of 100,000s of statements,
+    \item  solving multiphysics applications
+      \begin{itemize}
+      \item clashes of different coding styles
+      \item missing or insufficient documentation
+      \item lack of structure
+      \item reliability is hard to maintain
+      \end{itemize}
+    \end{itemize}
+  \item Simulation becomes black magic
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Breaking the Graduate Student Cycle}
+  \begin{enumerate}
+  \item Highly integrated libraries
+    \begin{itemize}
+    \item Programs start on a higher level
+    \item PhD students can solve more complex problems
+    \item programs get shorter, so they can be forwarded and edited
+    \item library functionality is documented and tested regularly
+    \end{itemize}
+  \item Publication of application software
+    \begin{itemize}
+    \item Recognition of intellectual achievement in good software
+    \item Readers can run programs and verify results
+    \item Software builds on previous publications, much like theorems do
+    \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+%% \begin{frame}
+%%   \frametitle{Archive of Numerical Software}
+%%   \begin{center}
+%%     \href{http://journals.tdl.org/ans}{\texttt{\large http://journals.tdl.org/ans}}
+%%   \end{center}
+%%   \begin{itemize}
+%%   \item Publication of well-documented, well-structured software
+%%   \item ``Short'' programs based on established libraries
+%%   \item Reported results must be reproducible
+%%   \item Community based, no additional cost to you library
+%%   \end{itemize}
+%% \end{frame}
+
+%% \begin{frame}
+%%   \frametitle{Mission Statement}
+
+%%   The Archive of Numerical Software aims to provide a venue to promote
+%%   the design, creation, use and re-use of high level applications and
+%%   high quality software packages for the implementation of numerical
+%%   methods.
+%% \end{frame}
+
+
+%% \begin{frame}
+%%   \frametitle{Reproducibility}
+
+%%   All results presented in the article must be reproducible using only
+%%   a few, simple commands and basic editing. We encourage to provide
+%%   scripts which automatically set parameters and execute examples, but
+%%   a confined section in the source code where parameters can be easily
+%%   edited is acceptable.
+
+%%   In furthering the journal's goal of promoting the use and re-use of
+%%   code, codes should be compatible with widely used and widely
+%%   available software (operating systems, compilers) and hardware
+%%   (CPUs).
+%% \end{frame}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "slides"
+%%% End: 

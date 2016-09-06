@@ -1,0 +1,7 @@
+create mesh and degrees of freedom
+
+create right hand side
+create matrix
+solve linear system
+
+output results
