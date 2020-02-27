@@ -12,12 +12,17 @@
     \item \url{www.virtualbox.org}
     \item Packaged with many Linux distributions
     \end{itemize}
-    \item Download the Virtual Machine Image from \url{dealii.org/download.html}
+  \item Download the Virtual Machine Image
+    \begin{itemize}
+    \item  \url{dealii.org/download.html}
+    \item From USB stick provided by your instructor
+    \end{itemize}
     \item Start the Virtual Box manager and import the \texttt{.ova} file
       \begin{itemize}
       \item Adjust the settings for CPUs, Memory to be less than what
         your machine has
       \item Delete the shared folder entry
+      \item Check for warnings
       \end{itemize}
     \item Start the newly imported virtual image
   \end{enumerate}
@@ -28,7 +33,7 @@
   \frametitle{Preparing dealii for our course}
   \begin{enumerate}
   \item Start the terminal (second menu item in the top bar)
-  \item Run the following
+  \item Check for installed tutorial
     \begin{block}{}
       \lstinputlisting{code/vmsetup.sh}      
     \end{block}
@@ -41,16 +46,16 @@
   \end{enumerate}
 \end{frame}
 
-\subsection{Downloading and setting up amandus}
-\begin{frame}
-  \frametitle{Downloading and setting up amandus}
-  \begin{enumerate}
-  \item From your home directory, run the following:
-    \begin{block}{}
-      \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
-    \end{block}
-  \end{enumerate}
-\end{frame}
+% \subsection{Downloading and setting up amandus}
+% \begin{frame}
+%   \frametitle{Downloading and setting up amandus}
+%   \begin{enumerate}
+%   \item From your home directory, run the following:
+%     \begin{block}{}
+%       \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
+%     \end{block}
+%   \end{enumerate}
+% \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
