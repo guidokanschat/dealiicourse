@@ -1,3 +1,22 @@
+\begin{frame}
+  \frametitle{Problem: Poisson equation, local refinement II}
+  \begin{enumerate}
+  \item Add a \lstinline!ConstraintMatrix! to your main class and fill it, using
+    \begin{itemize}
+    \item \lstinline!DoFTools::make_zero_boundary_constraints()!
+    \item \lstinline!DoFTools::make_hanging_node_constraints()!
+    \end{itemize}
+  \item Integrate the bilinear form into a \lstinline!FullMatrix! on
+    each cell.
+  \item Distribute the cell matrix and cell vector using the
+    \lstinline!ConstraintMatrix!
+  \item After solving, use \lstinline!ConstraintMatrix::distribute()!
+    to get the vector into a format that can be displayed
+  \item Use \lstinline!KellyErrorEstimator! on an L-shaped domain for
+    adaptive refinement
+  \end{enumerate}
+Hint: if you get stuck, read the documentation or step 6.
+\end{frame}
 
 \begin{frame}
   \frametitle{Problem: Poisson equation, local refinement}

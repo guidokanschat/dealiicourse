@@ -12,12 +12,17 @@
     \item \url{www.virtualbox.org}
     \item Packaged with many Linux distributions
     \end{itemize}
-    \item Download the Virtual Machine Image from \url{dealii.org/download.html}
+  \item Download the Virtual Machine Image
+    \begin{itemize}
+    \item  \url{dealii.org/download.html}
+    \item From USB stick provided by your instructor
+    \end{itemize}
     \item Start the Virtual Box manager and import the \texttt{.ova} file
       \begin{itemize}
       \item Adjust the settings for CPUs, Memory to be less than what
         your machine has
       \item Delete the shared folder entry
+      \item Check for warnings
       \end{itemize}
     \item Start the newly imported virtual image
   \end{enumerate}
@@ -28,29 +33,40 @@
   \frametitle{Preparing dealii for our course}
   \begin{enumerate}
   \item Start the terminal (second menu item in the top bar)
-  \item Run the following
+  \item Check for installed tutorial
     \begin{block}{}
-      \lstinputlisting{code/vmsetup.sh}      
+      \lstinputlisting{code/vmsetup.sh}
     \end{block}
-  \item Edit \lstinline!setup.sh! and remove the line that contains
+  \item If empty
     \begin{block}{}
-      \lstinline!git checkout v8.4.1!
+      \lstinputlisting{code/vmsetup2.sh}
     \end{block}
-    \item Run \lstinline!setup.sh! 
-  \item Go and have coffee, lunch, dinner, etc.
+    \begin{itemize}
+    \item Change to the line \lstinline{DEAL_II_COMPONENT_EXAMPLES=ON}
+    \item Run make
+    \item Go and have coffee, lunch, dinner, etc.
+    \end{itemize}
   \end{enumerate}
 \end{frame}
 
-\subsection{Downloading and setting up amandus}
 \begin{frame}
-  \frametitle{Downloading and setting up amandus}
-  \begin{enumerate}
-  \item From your home directory, run the following:
-    \begin{block}{}
-      \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
+  \frametitle{Using the examples}
+    \begin{block}{Copy and run}
+      \lstinputlisting{code/exmod.sh}
     \end{block}
-  \end{enumerate}
+    If you installed deal.II yourself you might have to provide cmake with the additional definition \lstinline{-Deal.II_DIR=/your/path/to/dealii}
 \end{frame}
+
+% \subsection{Downloading and setting up amandus}
+% \begin{frame}
+%   \frametitle{Downloading and setting up amandus}
+%   \begin{enumerate}
+%   \item From your home directory, run the following:
+%     \begin{block}{}
+%       \lstinputlisting[basicstyle=\footnotesize]{code/vmamandus.sh}
+%     \end{block}
+%   \end{enumerate}
+% \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,7 +97,7 @@
   \begin{itemize}
   \item CMake (3.0 or higher)
   \item perl (5.x or higher)
-  \item make or ninja as required by CMake
+     \item make or ninja as required by CMake
   \item Some visualization software
     \item Optional: 
     \begin{itemize}
