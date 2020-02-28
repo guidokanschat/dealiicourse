@@ -5,7 +5,13 @@
 \setbeamercovered{transparent}
 %\setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{sections in toc}{[ball unnumbered]}
-\usepackage{times}
+\addtobeamertemplate{footline}
+{%
+   \usebeamercolor[fg]{author in sidebar}
+   \vskip-1cm\hskip5pt
+   p. \insertframenumber\kern1em\vskip2pt%
+ }{}
+ \usepackage{times}
 \usefonttheme{structurebold}
 \usepackage[english]{babel}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -24,7 +30,7 @@
   February 29 -- March 2nd, 2020}
 %\date[PIMS 2016]{University of British Columbia\\ August 29 -- September 1st, 2016}
 \title[deal.II Course]{Short Course on Partial differential equations with deal.II}
-\author[Kanschat/Dond]{Guido Kanschat, Asha Kisan Dond}
+\author[Kanschat\\Dond]{Guido Kanschat, Asha Kisan Dond}
 \institute[IWR HD \& IISER TVM]{IWR, Universität Heidelberg
 and IISER Thiruvananthapuram
   \\[2mm]
@@ -55,7 +61,9 @@ and IISER Thiruvananthapuram
 \hypersetup{urlcolor=blue}
 \newcommand{\myurl}[2]{\underline{\href{#1}{#2}}}
 
-\def\partonename{}
+\def\partonename{Introduction, installation and first step}
+\def\parttwoname{Implementing the finite element method}
+\def\partthreename{Advanced topics}
 \begin{document}
 \begin{frame}[plain]
   \titlepage    
@@ -67,15 +75,15 @@ and IISER Thiruvananthapuram
 \begin{frame}
   \frametitle{Tutorial Structure}
   \begin{itemize}
-  \item Part 1: Installation, introduction to deal.II
-  \item Part 2: Guided tour through selected tutorials
-  \item Part 3: The package amandus for simplifying your life
+  \item  \hyperlink{part1}{\beamerbutton{Part 1: \partonename}}
+  \item  \hyperlink{part2}{\beamerbutton{Part 2: \parttwoname}}
+  \item  \hyperlink{part3}{\beamerbutton{Part 3: \partthreename}}
   \end{itemize}
 \end{frame}
 
 \input{part1}
 \input{part2}
-%\input{part3}
+\input{part3}
 
 \end{document}
 
